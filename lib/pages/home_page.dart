@@ -14,25 +14,26 @@ class HomePage extends StatelessWidget {
           ),
         ),
         actions: [
-          GestureDetector(
-            child: getHeaderItem('Home'),
-            onTap: () => {},
-          ),
-          GestureDetector(
-            child: getHeaderItem('Blog'),
-            onTap: () => {},
-          ),
-          GestureDetector(
-            child: getHeaderItem('Contact'),
-            onTap: () => {},
-          ),
+          getHeaderItem('Home'),
+          getHeaderItem('Blog'),
+          getHeaderItem('Contact'),
           SizedBox(width: 100),
         ],
       ),
       body: Scrollbar(
         child: SingleChildScrollView(
           child: Column(
-            children: [Introduction()],
+            children: [
+              Introduction(),
+              Container(
+                height: 500,
+                color: Colors.blue.shade700,
+              ),
+              Container(
+                height: 500,
+                color: Colors.red,
+              )
+            ],
           ),
         ),
       ),
@@ -43,12 +44,15 @@ class HomePage extends StatelessWidget {
     return Container(
       width: 110.0,
       child: Center(
-        child: Text(
-          title,
-          style: TextStyle(
-            color: Colors.blue,
-            fontSize: 16.0,
-            fontWeight: FontWeight.bold,
+        child: TextButton(
+          onPressed: () {},
+          child: Text(
+            title,
+            style: TextStyle(
+              color: Colors.blue.shade700,
+              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
