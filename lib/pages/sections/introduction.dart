@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Introduction extends StatelessWidget {
   @override
@@ -41,7 +42,19 @@ class Introduction extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () => {},
+                  onPressed: () async {
+                    final Uri emailLaunchUri = Uri(
+                      scheme: 'mailto',
+                      path: 'erikriosetiawan15@gmail.com',
+                      queryParameters: {'subject': 'Hello, Erik!'},
+                    );
+
+                    String url = emailLaunchUri.toString();
+
+                    await canLaunch(url)
+                        ? await launch(url)
+                        : throw 'Could not launch $url';
+                  },
                   child: Text("Let's Talk!"),
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all(
