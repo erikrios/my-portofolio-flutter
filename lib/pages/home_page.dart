@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
                 height: size.height * 3 / 4,
               ),
               Specialization(
-                height: size.height * 2.5 / 4,
+                height: size.height * 3 / 4,
               )
             ],
           ),
