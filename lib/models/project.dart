@@ -1,10 +1,10 @@
-class RecentWork {
+class Project {
   final String name;
   final String description;
   final String url;
   final String imagePath;
 
-  RecentWork(
+  Project(
       {required this.name,
       required this.description,
       required this.url,
