@@ -28,6 +28,8 @@ class ProjectItem extends StatelessWidget {
               ),
               Text(
                 project.description ?? "No Description",
+                maxLines: 9,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 16.0,
                 ),
