@@ -34,7 +34,13 @@ class ProjectItem extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  final Uri linkUri = Uri(scheme: 'https', path: project.url);
+                  String projectUrl = project.url ?? "";
+                  String plainUrl = projectUrl.contains('https')
+                      ? projectUrl.substring(8)
+                      : projectUrl.contains('http')
+                          ? projectUrl.substring(7)
+                          : projectUrl;
+                  final Uri linkUri = Uri(scheme: 'https', path: plainUrl);
                   final String url = linkUri.toString();
                   await canLaunch(url)
                       ? await launch(url)
