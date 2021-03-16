@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_portofolio_flutter/pages/sections/introduction.dart';
+import 'package:my_portofolio_flutter/pages/sections/recent_work.dart';
 import 'package:my_portofolio_flutter/pages/sections/resume.dart';
 import 'package:my_portofolio_flutter/pages/sections/specialization.dart';
 
@@ -35,7 +36,10 @@ class HomePage extends StatelessWidget {
               ),
               Specialization(
                 height: size.height * 3 / 4,
-              )
+              ),
+              RecentWork(
+                height: size.height * 3 / 4,
+              ),
             ],
           ),
         ),
