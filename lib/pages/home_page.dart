@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
                 height: size.height * 3 / 4,
               ),
               RecentWork(
-                height: size.height * 3 / 4,
+                height: size.height * 5 / 6,
               ),
             ],
           ),
