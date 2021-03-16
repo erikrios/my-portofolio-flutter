@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_portofolio_flutter/pages/sections/introduction.dart';
+import 'package:my_portofolio_flutter/pages/sections/resume.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -28,9 +29,8 @@ class HomePage extends StatelessWidget {
               Introduction(
                 height: size.height * 3 / 4,
               ),
-              Container(
+              Resume(
                 height: size.height * 3 / 4,
-                color: Colors.blue.shade700,
               ),
               Container(
                 height: size.height * 3 / 4,
