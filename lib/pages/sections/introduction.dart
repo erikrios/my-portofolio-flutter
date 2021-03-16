@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Introduction extends StatelessWidget {
+  final double height;
+
+  Introduction({required this.height});
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -9,7 +13,7 @@ class Introduction extends StatelessWidget {
     double width = size.width;
 
     return Container(
-      height: 500,
+      height: this.height,
       child: Row(
         children: [
           Container(

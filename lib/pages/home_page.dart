@@ -4,6 +4,7 @@ import 'package:my_portofolio_flutter/pages/sections/introduction.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -24,13 +25,15 @@ class HomePage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Introduction(),
+              Introduction(
+                height: size.height * 3 / 4,
+              ),
               Container(
-                height: 500,
+                height: size.height * 3 / 4,
                 color: Colors.blue.shade700,
               ),
               Container(
-                height: 500,
+                height: size.height * 3 / 4,
                 color: Colors.red,
               )
             ],
