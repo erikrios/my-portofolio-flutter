@@ -27,7 +27,7 @@ class Footer extends StatelessWidget {
                     final String url =
                         'https://www.linkedin.com/in/erikriosetiawan/';
                     await canLaunch(url)
-                        ? launch(url)
+                        ? await launch(url)
                         : throw 'Could not launch $url';
                   }),
               _socialIcon(
@@ -36,7 +36,7 @@ class Footer extends StatelessWidget {
                   onPressed: () async {
                     final String url = 'https://github.com/erikrios';
                     await canLaunch(url)
-                        ? launch(url)
+                        ? await launch(url)
                         : throw 'Could not launch $url';
                   }),
               _socialIcon(
@@ -45,7 +45,7 @@ class Footer extends StatelessWidget {
                   onPressed: () async {
                     final String url = 'mailto:erikriosetiawan15@gmail.com';
                     await canLaunch(url)
-                        ? launch(url)
+                        ? await launch(url)
                         : throw 'Could not launch $url';
                   }),
             ],
