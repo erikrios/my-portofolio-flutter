@@ -5,6 +5,8 @@ import 'package:my_portofolio_flutter/pages/sections/recent_work.dart';
 import 'package:my_portofolio_flutter/pages/sections/resume.dart';
 import 'package:my_portofolio_flutter/pages/sections/specialization.dart';
 
+import 'sections/footer.dart';
+
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -43,6 +45,9 @@ class HomePage extends StatelessWidget {
               ),
               Contact(
                 height: size.height * 3 / 4,
+              ),
+              Footer(
+                height: size.height * 1 / 4,
               ),
             ],
           ),
