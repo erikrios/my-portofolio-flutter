@@ -1,35 +1,44 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:my_portofolio_flutter/models/project.dart';
+import 'package:my_portofolio_flutter/responsive/screen_size.dart';
 import 'package:my_portofolio_flutter/widgets/project_item.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RecentWork extends StatelessWidget {
   final double height;
+  final ScreenSize screenSize;
 
-  RecentWork({required this.height});
+  RecentWork({required this.screenSize, required this.height});
 
   @override
   Widget build(BuildContext context) {
     final projects = getProjects();
+    final bool isSmallOrNormalScreen =
+        screenSize == ScreenSize.SMALL || screenSize == ScreenSize.NORMAL;
 
     return Container(
-      height: height,
-      padding: EdgeInsets.only(
-        left: 100,
-        top: 40,
-        right: 100,
-      ),
+      height: isSmallOrNormalScreen ? height * 1.2 : height * 5 / 6,
+      padding: isSmallOrNormalScreen
+          ? EdgeInsets.all(16.0)
+          : EdgeInsets.only(
+              left: 100,
+              top: 40,
+              right: 100,
+            ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: isSmallOrNormalScreen
+            ? MainAxisAlignment.spaceEvenly
+            : MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Flexible(
-            flex: 2,
+            flex: isSmallOrNormalScreen ? 1 : 2,
             child: Text(
               "What I've Been Up To".toUpperCase(),
+              textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 40,
+                fontSize: isSmallOrNormalScreen ? 28.0 : 40.0,
                 fontWeight: FontWeight.bold,
                 color: Colors.blue.shade700,
               ),
@@ -39,14 +48,15 @@ class RecentWork extends StatelessWidget {
             flex: 1,
             child: Text(
               "Here's a selection of some recent work",
+              textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 18,
+                fontSize: isSmallOrNormalScreen ? 16.0 : 18.0,
                 color: Colors.blue,
               ),
             ),
           ),
           Flexible(
-            flex: 8,
+            flex: isSmallOrNormalScreen ? 10 : 8,
             child: Center(
               child: Card(
                 elevation: 80,
@@ -55,15 +65,18 @@ class RecentWork extends StatelessWidget {
                 ),
                 child: Container(
                   height: double.maxFinite,
-                  width: MediaQuery.of(context).size.width * 2 / 3,
+                  width: isSmallOrNormalScreen
+                      ? MediaQuery.of(context).size.width * 2.4 / 3
+                      : MediaQuery.of(context).size.width * 2 / 3,
                   padding: EdgeInsets.symmetric(
-                    vertical: 25,
-                    horizontal: 100,
+                    vertical: isSmallOrNormalScreen ? 16.0 : 25.0,
+                    horizontal: isSmallOrNormalScreen ? 20.0 : 100.0,
                   ),
                   child: CarouselSlider.builder(
                     itemCount: projects.length,
                     itemBuilder: (BuildContext context, int index, _) =>
                         ProjectItem(
+                      isSmallOrNormalScreen: isSmallOrNormalScreen,
                       project: projects[index],
                     ),
                     options: CarouselOptions(
