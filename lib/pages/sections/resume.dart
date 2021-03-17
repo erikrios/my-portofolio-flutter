@@ -13,16 +13,16 @@ class Resume extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    final bool _isSmallOrNormalScreen =
+    final bool isSmallOrNormalScreen =
         screenSize == ScreenSize.SMALL || screenSize == ScreenSize.NORMAL;
 
     return Container(
       padding: EdgeInsets.all(
-        _isSmallOrNormalScreen ? 16.0 : 40.0,
+        isSmallOrNormalScreen ? 16.0 : 40.0,
       ),
       color: Colors.blue.shade700,
       height: height * 3 / 4,
-      child: _isSmallOrNormalScreen
+      child: isSmallOrNormalScreen
           ? Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -30,14 +30,14 @@ class Resume extends StatelessWidget {
                 Flexible(
                   flex: 2,
                   child: _handlePhotos(
-                    isSmallOrNormalScreen: _isSmallOrNormalScreen,
+                    isSmallOrNormalScreen: isSmallOrNormalScreen,
                     width: width,
                   ),
                 ),
                 Flexible(
                   flex: 3,
                   child: _handleInfo(
-                    isSmallOrNormalScreen: _isSmallOrNormalScreen,
+                    isSmallOrNormalScreen: isSmallOrNormalScreen,
                   ),
                 ),
               ],
@@ -47,14 +47,14 @@ class Resume extends StatelessWidget {
                 Flexible(
                   flex: 1,
                   child: _handlePhotos(
-                    isSmallOrNormalScreen: _isSmallOrNormalScreen,
+                    isSmallOrNormalScreen: isSmallOrNormalScreen,
                     width: width,
                   ),
                 ),
                 Flexible(
                   flex: 1,
                   child: _handleInfo(
-                    isSmallOrNormalScreen: _isSmallOrNormalScreen,
+                    isSmallOrNormalScreen: isSmallOrNormalScreen,
                   ),
                 ),
               ],
