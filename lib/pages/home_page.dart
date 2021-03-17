@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_portofolio_flutter/pages/sections/contact.dart';
 import 'package:my_portofolio_flutter/pages/sections/introduction.dart';
 import 'package:my_portofolio_flutter/pages/sections/recent_work.dart';
 import 'package:my_portofolio_flutter/pages/sections/resume.dart';
@@ -39,6 +40,9 @@ class HomePage extends StatelessWidget {
               ),
               RecentWork(
                 height: size.height * 5 / 6,
+              ),
+              Contact(
+                height: size.height * 3 / 4,
               ),
             ],
           ),
