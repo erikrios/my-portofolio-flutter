@@ -38,7 +38,9 @@ class Specialization extends StatelessWidget {
               ),
               child: Container(
                 height: height,
-                width: MediaQuery.of(context).size.width * 2 / 3,
+                width: isSmallOrNormalScreen
+                    ? MediaQuery.of(context).size.width * 2.4 / 3
+                    : MediaQuery.of(context).size.width * 2 / 3,
                 padding: EdgeInsets.all(
                   isSmallOrNormalScreen ? 16.0 : 40.0,
                 ),
@@ -157,7 +159,7 @@ class Specialization extends StatelessWidget {
           Text(
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             textAlign: TextAlign.center,
-            maxLines: 4,
+            maxLines: isSmallOrNormalScreen ? 5 : 4,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: isSmallOrNormalScreen ? 12 : 16.0,
