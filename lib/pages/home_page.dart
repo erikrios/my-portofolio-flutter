@@ -164,6 +164,12 @@ class HomePage extends StatelessWidget {
               title: Text(
                 'Home',
               ),
+              leading: Icon(
+                Icons.home,
+              ),
+              trailing: Icon(
+                Icons.navigate_next,
+              ),
             ),
             ListTile(
               onTap: () {
@@ -172,6 +178,12 @@ class HomePage extends StatelessWidget {
               title: Text(
                 'Blog',
               ),
+              leading: Icon(
+                Icons.book,
+              ),
+              trailing: Icon(
+                Icons.navigate_next,
+              ),
             ),
             ListTile(
               onTap: () {
@@ -179,6 +191,12 @@ class HomePage extends StatelessWidget {
               },
               title: Text(
                 'Contact',
+              ),
+              leading: Icon(
+                Icons.contacts,
+              ),
+              trailing: Icon(
+                Icons.navigate_next,
               ),
             ),
           ],
