@@ -99,7 +99,9 @@ class Introduction extends StatelessWidget {
               child: Text("Let's Talk!"),
               style: ButtonStyle(
                 padding: MaterialStateProperty.all(
-                  EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                  isSmallOrNormalScreen
+                      ? EdgeInsets.symmetric(horizontal: 18, vertical: 12)
+                      : EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                 ),
                 textStyle: MaterialStateProperty.all(TextStyle(
                   fontSize: isSmallOrNormalScreen ? 16.0 : 18.0,
