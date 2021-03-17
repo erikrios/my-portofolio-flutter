@@ -48,6 +48,10 @@ class HomePage extends StatelessWidget {
           appBar: getAppBar(
             screenSize: _screenSize,
           ),
+          drawer: getDrawer(
+            context: context,
+            screenSize: _screenSize,
+          ),
           body: Scrollbar(
             child: SingleChildScrollView(
               child: Column(
@@ -102,6 +106,7 @@ class HomePage extends StatelessWidget {
     bool isSmallScreen = screenSize == ScreenSize.SMALL;
 
     return AppBar(
+      backgroundColor: Colors.white,
       title: isSmallScreen
           ? Text(
               'Erik Rio Setiawan',
@@ -110,9 +115,20 @@ class HomePage extends StatelessWidget {
               ),
             )
           : null,
-      backgroundColor: Colors.white,
       leading: isSmallScreen
-          ? null
+          ? Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: Icon(
+                    Icons.menu,
+                    color: Colors.blue.shade700,
+                  ),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                );
+              },
+            )
           : Padding(
               padding: const EdgeInsets.only(left: 20),
               child: Image.asset(
@@ -128,5 +144,43 @@ class HomePage extends StatelessWidget {
               SizedBox(width: 100),
             ],
     );
+  }
+
+  Drawer? getDrawer(
+      {required BuildContext context, required ScreenSize screenSize}) {
+    bool isSmallScreen = screenSize == ScreenSize.SMALL;
+    if (isSmallScreen)
+      return Drawer(
+        child: ListView(
+          children: [
+            ListTile(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              title: Text(
+                'Home',
+              ),
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              title: Text(
+                'Blog',
+              ),
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              title: Text(
+                'Contact',
+              ),
+            ),
+          ],
+        ),
+      );
+    else
+      return null;
   }
 }
