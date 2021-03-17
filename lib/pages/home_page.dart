@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:my_portofolio_flutter/pages/sections/contact.dart';
 import 'package:my_portofolio_flutter/pages/sections/introduction.dart';
