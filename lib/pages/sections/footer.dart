@@ -1,17 +1,19 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
+import 'package:my_portofolio_flutter/responsive/screen_size.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Footer extends StatelessWidget {
   final double height;
+  final ScreenSize screenSize;
 
-  Footer({required this.height});
+  Footer({required this.screenSize, required this.height});
 
   @override
   Widget build(BuildContext context) {
+    bool isSmallOrNormalScreen =
+        screenSize == ScreenSize.SMALL || screenSize == ScreenSize.NORMAL;
     return Container(
-      height: height,
+      height: isSmallOrNormalScreen ? height * 1 / 6 : height * 1 / 4,
       color: Colors.grey.shade200,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -22,7 +24,8 @@ class Footer extends StatelessWidget {
             children: [
               _socialIcon(
                   path: 'assets/images/linkedin.png',
-                  iconSize: 36.0,
+                  iconSize: isSmallOrNormalScreen ? 24.0 : 36.0,
+                  padding: isSmallOrNormalScreen ? 4.0 : 8.0,
                   onPressed: () async {
                     final String url =
                         'https://www.linkedin.com/in/erikriosetiawan/';
@@ -32,7 +35,8 @@ class Footer extends StatelessWidget {
                   }),
               _socialIcon(
                   path: 'assets/images/github.png',
-                  iconSize: 36.0,
+                  iconSize: isSmallOrNormalScreen ? 24.0 : 36.0,
+                  padding: isSmallOrNormalScreen ? 4.0 : 8.0,
                   onPressed: () async {
                     final String url = 'https://github.com/erikrios';
                     await canLaunch(url)
@@ -41,7 +45,8 @@ class Footer extends StatelessWidget {
                   }),
               _socialIcon(
                   path: 'assets/images/email.png',
-                  iconSize: 36.0,
+                  iconSize: isSmallOrNormalScreen ? 24.0 : 36.0,
+                  padding: isSmallOrNormalScreen ? 4.0 : 8.0,
                   onPressed: () async {
                     final String url = 'mailto:erikriosetiawan15@gmail.com';
                     await canLaunch(url)
@@ -51,10 +56,13 @@ class Footer extends StatelessWidget {
             ],
           ),
           Text(
-            '\u00a9 All Right Reserved - Designed by Erik Rio Setiwan',
+            isSmallOrNormalScreen
+                ? '\u00a9 All Right Reserved\nDesigned by Erik Rio Setiwan'
+                : '\u00a9 All Right Reserved - Designed by Erik Rio Setiwan',
+            textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.blue.shade700,
-              fontSize: 16.0,
+              fontSize: isSmallOrNormalScreen ? 12.0 : 16.0,
             ),
           )
         ],
@@ -65,10 +73,13 @@ class Footer extends StatelessWidget {
   Widget _socialIcon({
     required String path,
     required double iconSize,
+    required double padding,
     required void Function() onPressed,
   }) =>
       Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(
+          padding,
+        ),
         child: IconButton(
           icon: Image.asset(path),
           iconSize: iconSize,
