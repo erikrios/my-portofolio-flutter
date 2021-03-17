@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:my_portofolio_flutter/pages/sections/contact.dart';
 import 'package:my_portofolio_flutter/pages/sections/introduction.dart';
@@ -97,25 +99,34 @@ class HomePage extends StatelessWidget {
   }
 
   AppBar? getAppBar({required ScreenSize screenSize}) {
-    bool isMediumOrLargeSize =
-        (screenSize == ScreenSize.MEDIUM || screenSize == ScreenSize.LARGE);
-    if (isMediumOrLargeSize) {
-      return AppBar(
-        backgroundColor: Colors.white,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 20),
-          child: Image.asset(
-            'assets/images/logo.png',
-          ),
-        ),
-        actions: [
-          getHeaderItem('Home'),
-          getHeaderItem('Blog'),
-          getHeaderItem('Contact'),
-          SizedBox(width: 100),
-        ],
-      );
-    } else
-      return null;
+    bool isSmallScreen = screenSize == ScreenSize.SMALL;
+
+    return AppBar(
+      title: isSmallScreen
+          ? Text(
+              'Erik Rio Setiawan',
+              style: TextStyle(
+                color: Colors.blue.shade700,
+              ),
+            )
+          : null,
+      backgroundColor: Colors.white,
+      leading: isSmallScreen
+          ? null
+          : Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: Image.asset(
+                'assets/images/logo.png',
+              ),
+            ),
+      actions: isSmallScreen
+          ? null
+          : [
+              getHeaderItem('Home'),
+              getHeaderItem('Blog'),
+              getHeaderItem('Contact'),
+              SizedBox(width: 100),
+            ],
+    );
   }
 }
