@@ -44,7 +44,7 @@ class HomePage extends StatelessWidget {
                 height: size.height * 5 / 6,
               ),
               Contact(
-                height: size.height * 3 / 4,
+                height: size.height * 5 / 6,
               ),
               Footer(
                 height: size.height * 1 / 4,
