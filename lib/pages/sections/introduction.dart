@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_portofolio_flutter/responsive/screen_size.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -17,6 +18,8 @@ class Introduction extends StatelessWidget {
       height: this.height * 3 / 4,
       child: isSmallOrNormalScreen
           ? Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Flexible(
                   flex: 2,
@@ -54,10 +57,14 @@ class Introduction extends StatelessWidget {
           : EdgeInsets.symmetric(horizontal: 50, vertical: 50),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: isSmallOrNormalScreen
+            ? CrossAxisAlignment.center
+            : CrossAxisAlignment.start,
         children: [
           Text(
             'Hello'.toUpperCase(),
+            textAlign:
+                isSmallOrNormalScreen ? TextAlign.center : TextAlign.left,
             style: TextStyle(
               color: Colors.blue.shade700,
               fontSize: isSmallOrNormalScreen ? 20.0 : 30.0,
@@ -65,6 +72,8 @@ class Introduction extends StatelessWidget {
           ),
           Text(
             "I'm Erik Rio Setiawan".toUpperCase(),
+            textAlign:
+                isSmallOrNormalScreen ? TextAlign.center : TextAlign.left,
             style: TextStyle(
               color: Colors.blue.shade700,
               fontWeight: FontWeight.bold,
@@ -75,6 +84,8 @@ class Introduction extends StatelessWidget {
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             maxLines: isSmallOrNormalScreen ? 10 : 6,
             overflow: TextOverflow.ellipsis,
+            textAlign:
+                isSmallOrNormalScreen ? TextAlign.center : TextAlign.left,
             style: TextStyle(
               fontSize: isSmallOrNormalScreen ? 14.0 : 16.0,
             ),
