@@ -58,7 +58,8 @@ class HomePage extends StatelessWidget {
                     height: _size.height,
                   ),
                   Resume(
-                    height: _size.height * 3 / 4,
+                    screenSize: _screenSize,
+                    height: _size.height,
                   ),
                   Specialization(
                     height: _size.height * 3 / 4,
