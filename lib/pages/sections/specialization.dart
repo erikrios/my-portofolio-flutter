@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:my_portofolio_flutter/responsive/screen_size.dart';
 
 class Specialization extends StatelessWidget {
   final double height;
+  final ScreenSize screenSize;
 
-  Specialization({required this.height});
+  Specialization({required this.screenSize, required this.height});
 
   @override
   Widget build(BuildContext context) {
+    final bool isSmallOrNormalScreen =
+        screenSize == ScreenSize.SMALL || screenSize == ScreenSize.NORMAL;
+
     return Container(
-      height: height,
+      height: isSmallOrNormalScreen ? height * 1 : height * 3 / 4,
       child: Stack(
         children: [
           Column(
@@ -34,7 +39,9 @@ class Specialization extends StatelessWidget {
               child: Container(
                 height: height,
                 width: MediaQuery.of(context).size.width * 2 / 3,
-                padding: EdgeInsets.all(40),
+                padding: EdgeInsets.all(
+                  isSmallOrNormalScreen ? 16.0 : 40.0,
+                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -44,40 +51,26 @@ class Specialization extends StatelessWidget {
                       child: Text(
                         'Specializing In'.toUpperCase(),
                         style: TextStyle(
-                          fontSize: 40.0,
+                          fontSize: isSmallOrNormalScreen ? 28.0 : 40.0,
                           fontWeight: FontWeight.bold,
                           color: Colors.blue.shade700,
                         ),
                       ),
                     ),
                     Flexible(
-                      flex: 2,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Flexible(
-                            flex: 1,
-                            child: _getSpecializationItem(
-                              'Android Developer',
-                              Icons.android,
+                      flex: isSmallOrNormalScreen ? 5 : 2,
+                      child: isSmallOrNormalScreen
+                          ? Column(
+                              children: _getSpecializationItems(
+                                isSmallOrNormalScreen: isSmallOrNormalScreen,
+                              ),
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: _getSpecializationItems(
+                                isSmallOrNormalScreen: isSmallOrNormalScreen,
+                              ),
                             ),
-                          ),
-                          Flexible(
-                            flex: 1,
-                            child: _getSpecializationItem(
-                              'Back-End Engineer',
-                              Icons.computer,
-                            ),
-                          ),
-                          Flexible(
-                            flex: 1,
-                            child: _getSpecializationItem(
-                              'Cross-Platform Developer',
-                              Icons.web,
-                            ),
-                          ),
-                        ],
-                      ),
                     ),
                   ],
                 ),
@@ -89,7 +82,39 @@ class Specialization extends StatelessWidget {
     );
   }
 
-  Widget _getSpecializationItem(String title, IconData iconData) {
+  List<Widget> _getSpecializationItems({required bool isSmallOrNormalScreen}) {
+    return [
+      Flexible(
+        flex: 1,
+        child: _getSpecializationItem(
+          title: 'Android Developer',
+          iconData: Icons.android,
+          isSmallOrNormalScreen: isSmallOrNormalScreen,
+        ),
+      ),
+      Flexible(
+        flex: 1,
+        child: _getSpecializationItem(
+          title: 'Back-End Engineer',
+          iconData: Icons.computer,
+          isSmallOrNormalScreen: isSmallOrNormalScreen,
+        ),
+      ),
+      Flexible(
+        flex: 1,
+        child: _getSpecializationItem(
+          title: 'Cross-Platform Developer',
+          iconData: Icons.web,
+          isSmallOrNormalScreen: isSmallOrNormalScreen,
+        ),
+      ),
+    ];
+  }
+
+  Widget _getSpecializationItem(
+      {required String title,
+      required IconData iconData,
+      required bool isSmallOrNormalScreen}) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -97,10 +122,12 @@ class Specialization extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            width: 80.0,
-            height: 80.0,
+            width: isSmallOrNormalScreen ? 50.0 : 80.0,
+            height: isSmallOrNormalScreen ? 50.0 : 80.0,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(80.0),
+              borderRadius: BorderRadius.circular(
+                isSmallOrNormalScreen ? 50.0 : 80.0,
+              ),
               child: Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -112,7 +139,7 @@ class Specialization extends StatelessWidget {
                 ),
                 child: Icon(
                   iconData,
-                  size: 50,
+                  size: isSmallOrNormalScreen ? 32.0 : 50.0,
                   color: Colors.blue.shade700,
                 ),
               ),
@@ -123,7 +150,7 @@ class Specialization extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.blue.shade700,
-              fontSize: 20.0,
+              fontSize: isSmallOrNormalScreen ? 16.0 : 20.0,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -133,7 +160,7 @@ class Specialization extends StatelessWidget {
             maxLines: 4,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-              fontSize: 16.0,
+              fontSize: isSmallOrNormalScreen ? 12 : 16.0,
             ),
           )
         ],
