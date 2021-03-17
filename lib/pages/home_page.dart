@@ -6,7 +6,6 @@ import 'package:my_portofolio_flutter/pages/sections/resume.dart';
 import 'package:my_portofolio_flutter/pages/sections/specialization.dart';
 import 'package:my_portofolio_flutter/responsive/screen_size.dart';
 import 'package:my_portofolio_flutter/responsive/util.dart';
-
 import 'sections/footer.dart';
 
 class HomePage extends StatelessWidget {
@@ -55,7 +54,8 @@ class HomePage extends StatelessWidget {
               child: Column(
                 children: [
                   Introduction(
-                    height: _size.height * 3 / 4,
+                    screenSize: _screenSize,
+                    height: _size.height,
                   ),
                   Resume(
                     height: _size.height * 3 / 4,
