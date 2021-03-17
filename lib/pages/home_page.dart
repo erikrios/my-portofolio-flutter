@@ -27,31 +27,37 @@ class HomePage extends StatelessWidget {
           SizedBox(width: 100),
         ],
       ),
-      body: Scrollbar(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Introduction(
-                height: size.height * 3 / 4,
+      body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          print('Max Width : ${constraints.maxWidth}');
+          print('Max Height : ${constraints.maxHeight}');
+          return Scrollbar(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Introduction(
+                    height: size.height * 3 / 4,
+                  ),
+                  Resume(
+                    height: size.height * 3 / 4,
+                  ),
+                  Specialization(
+                    height: size.height * 3 / 4,
+                  ),
+                  RecentWork(
+                    height: size.height * 5 / 6,
+                  ),
+                  Contact(
+                    height: size.height * 5 / 6,
+                  ),
+                  Footer(
+                    height: size.height * 1 / 4,
+                  ),
+                ],
               ),
-              Resume(
-                height: size.height * 3 / 4,
-              ),
-              Specialization(
-                height: size.height * 3 / 4,
-              ),
-              RecentWork(
-                height: size.height * 5 / 6,
-              ),
-              Contact(
-                height: size.height * 5 / 6,
-              ),
-              Footer(
-                height: size.height * 1 / 4,
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
