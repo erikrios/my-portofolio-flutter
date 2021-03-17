@@ -6,73 +6,75 @@ import 'package:my_portofolio_flutter/pages/sections/resume.dart';
 import 'package:my_portofolio_flutter/pages/sections/specialization.dart';
 import 'package:my_portofolio_flutter/responsive/screen_size.dart';
 import 'package:my_portofolio_flutter/responsive/util.dart';
+
 import 'sections/footer.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Size _size = MediaQuery.of(context).size;
-    ScreenSize _screenSize;
+    final Size size = MediaQuery.of(context).size;
+    ScreenSize screenSize;
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         switch (getScreenSize(constraints.maxWidth)) {
           case ScreenSize.SMALL:
             {
-              _screenSize = ScreenSize.SMALL;
+              screenSize = ScreenSize.SMALL;
               print(ScreenSize.SMALL.toString());
             }
             break;
           case ScreenSize.NORMAL:
             {
-              _screenSize = ScreenSize.NORMAL;
+              screenSize = ScreenSize.NORMAL;
               print(ScreenSize.NORMAL.toString());
             }
             break;
           case ScreenSize.MEDIUM:
             {
-              _screenSize = ScreenSize.MEDIUM;
+              screenSize = ScreenSize.MEDIUM;
               print(ScreenSize.MEDIUM.toString());
             }
             break;
           case ScreenSize.LARGE:
             {
-              _screenSize = ScreenSize.LARGE;
+              screenSize = ScreenSize.LARGE;
               print(ScreenSize.LARGE.toString());
             }
         }
         return Scaffold(
           appBar: getAppBar(
-            screenSize: _screenSize,
+            screenSize: screenSize,
           ),
           drawer: getDrawer(
             context: context,
-            screenSize: _screenSize,
+            screenSize: screenSize,
           ),
           body: Scrollbar(
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   Introduction(
-                    screenSize: _screenSize,
-                    height: _size.height,
+                    screenSize: screenSize,
+                    height: size.height,
                   ),
                   Resume(
-                    screenSize: _screenSize,
-                    height: _size.height,
+                    screenSize: screenSize,
+                    height: size.height,
                   ),
                   Specialization(
-                    screenSize: _screenSize,
-                    height: _size.height,
+                    screenSize: screenSize,
+                    height: size.height,
                   ),
                   RecentWork(
-                    height: _size.height * 5 / 6,
+                    screenSize: screenSize,
+                    height: size.height,
                   ),
                   Contact(
-                    height: _size.height * 5 / 6,
+                    height: size.height * 5 / 6,
                   ),
                   Footer(
-                    height: _size.height * 1 / 4,
+                    height: size.height * 1 / 4,
                   ),
                 ],
               ),
