@@ -34,10 +34,20 @@ class _ContactState extends State<Contact> {
   bool _isMessageEmpty = false;
 
   @override
+  void dispose() {
+    super.dispose();
+    _nameController.dispose();
+    _emailController.dispose();
+    _subjectController.dispose();
+    _messageController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     bool isSmallOrNormalScreen =
         screenSize == ScreenSize.SMALL || screenSize == ScreenSize.NORMAL;
-
+    print(isSmallOrNormalScreen);
+    print(screenSize);
     return Container(
       height: isSmallOrNormalScreen ? height : height * 5 / 6,
       padding: isSmallOrNormalScreen
