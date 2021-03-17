@@ -120,6 +120,7 @@ class Specialization extends StatelessWidget {
           ),
           Text(
             title,
+            textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.blue.shade700,
               fontSize: 20.0,
@@ -129,6 +130,8 @@ class Specialization extends StatelessWidget {
           Text(
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             textAlign: TextAlign.center,
+            maxLines: 4,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: 16.0,
             ),
