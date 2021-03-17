@@ -1,21 +1,27 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:my_portofolio_flutter/responsive/screen_size.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Contact extends StatefulWidget {
   final double height;
+  final ScreenSize screenSize;
 
-  Contact({required this.height});
+  Contact({required this.screenSize, required this.height});
 
   @override
-  _ContactState createState() => _ContactState(height: height);
+  _ContactState createState() => _ContactState(
+        screenSize: screenSize,
+        height: height,
+      );
 }
 
 class _ContactState extends State<Contact> {
   final double height;
+  final ScreenSize screenSize;
 
-  _ContactState({required this.height});
+  _ContactState({required this.screenSize, required this.height});
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -29,12 +35,17 @@ class _ContactState extends State<Contact> {
 
   @override
   Widget build(BuildContext context) {
+    bool isSmallOrNormalScreen =
+        screenSize == ScreenSize.SMALL || screenSize == ScreenSize.NORMAL;
+
     return Container(
-      height: height,
-      padding: EdgeInsets.symmetric(
-        vertical: 30.0,
-        horizontal: 50.0,
-      ),
+      height: isSmallOrNormalScreen ? height : height * 5 / 6,
+      padding: isSmallOrNormalScreen
+          ? EdgeInsets.all(16.0)
+          : EdgeInsets.symmetric(
+              vertical: 30.0,
+              horizontal: 50.0,
+            ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,7 +57,7 @@ class _ContactState extends State<Contact> {
               style: TextStyle(
                 color: Colors.blue.shade700,
                 fontWeight: FontWeight.bold,
-                fontSize: 40.0,
+                fontSize: isSmallOrNormalScreen ? 28.0 : 40.0,
               ),
             ),
           ),
@@ -56,7 +67,7 @@ class _ContactState extends State<Contact> {
               'Interested in working together?\nFeel free to contact me for any project or collaboration.',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 18.0,
+                fontSize: isSmallOrNormalScreen ? 16.0 : 18.0,
               ),
             ),
           ),
@@ -66,141 +77,41 @@ class _ContactState extends State<Contact> {
               children: [
                 Flexible(
                   flex: 1,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Flexible(
-                        flex: 1,
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Image.asset('assets/images/coworking.png'),
-                        ),
-                      ),
-                      Flexible(
-                        flex: 1,
-                        child: Column(
+                  child: isSmallOrNormalScreen
+                      ? Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Row(
-                              children: [
-                                Flexible(
-                                  flex: 1,
-                                  child: _getTextFieldItem(
-                                    controller: _nameController,
-                                    maxLines: 1,
-                                    labelText: 'Name',
-                                    hintText: 'Type your name',
-                                    isEmpty: _isNameEmpty,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Flexible(
-                                  flex: 1,
-                                  child: _getTextFieldItem(
-                                    controller: _emailController,
-                                    maxLines: 1,
-                                    labelText: 'Email',
-                                    hintText: 'Type your email',
-                                    isEmpty: _isEmailEmpty,
-                                  ),
-                                ),
-                              ],
-                            ),
                             Flexible(
                               flex: 1,
-                              child: _getTextFieldItem(
-                                controller: _subjectController,
-                                maxLines: 1,
-                                labelText: 'Subject',
-                                hintText: 'Type subject',
-                                isEmpty: _isSubjectEmpty,
+                              child: _getImages(
+                                isSmallOrNormalScreen: isSmallOrNormalScreen,
                               ),
                             ),
                             Flexible(
-                              flex: 3,
-                              child: _getTextFieldItem(
-                                controller: _messageController,
-                                maxLines: 4,
-                                labelText: 'Message',
-                                hintText: 'Type message',
-                                isEmpty: _isMessageEmpty,
-                                alignWithHint: true,
+                              flex: 2,
+                              child: _getForms(
+                                  isSmallOrNormalScreen: isSmallOrNormalScreen),
+                            ),
+                          ],
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              flex: 1,
+                              child: _getImages(
+                                isSmallOrNormalScreen: isSmallOrNormalScreen,
                               ),
                             ),
                             Flexible(
                               flex: 1,
-                              child: ElevatedButton(
-                                onPressed: () async {
-                                  setState(() {
-                                    _isNameEmpty =
-                                        _isEmptyValidate(_nameController);
-                                    _isEmailEmpty =
-                                        _isEmptyValidate(_emailController);
-                                    _isSubjectEmpty =
-                                        _isEmptyValidate(_subjectController);
-                                    _isMessageEmpty =
-                                        _isEmptyValidate(_messageController);
-                                  });
-
-                                  if (!_isNameEmpty &&
-                                      !_isEmailEmpty &&
-                                      !_isSubjectEmpty &&
-                                      !_isMessageEmpty) {
-                                    String name = _nameController.text;
-                                    String email = _emailController.text;
-                                    String subject = _subjectController.text;
-                                    String message = _messageController.text;
-
-                                    final emailUri = Uri(
-                                      scheme: 'mailto',
-                                      path: 'erikriosetiawan15@gmail.com',
-                                      queryParameters: {
-                                        'name': name,
-                                        'email': email,
-                                        'subject': subject,
-                                        'message': message,
-                                      },
-                                    );
-
-                                    String url = emailUri.toString();
-                                    await canLaunch(url)
-                                        ? await launch(url)
-                                        : throw 'Could not launch $url';
-                                  }
-                                },
-                                child: Text('Send'),
-                                style: ButtonStyle(
-                                  padding: MaterialStateProperty.all(
-                                    EdgeInsets.symmetric(
-                                      vertical: 14.0,
-                                      horizontal: 34.0,
-                                    ),
-                                  ),
-                                  textStyle: MaterialStateProperty.all(
-                                    TextStyle(
-                                      fontSize: 18.0,
-                                    ),
-                                  ),
-                                  backgroundColor: MaterialStateProperty.all(
-                                    Colors.blue.shade700,
-                                  ),
-                                  shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                        18.0,
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                              child: _getForms(
+                                isSmallOrNormalScreen: isSmallOrNormalScreen,
                               ),
                             ),
                           ],
                         ),
-                      ),
-                    ],
-                  ),
                 ),
               ],
             ),
@@ -232,6 +143,138 @@ class _ContactState extends State<Contact> {
           color: Colors.blue.shade700,
         ),
       ),
+    );
+  }
+
+  Widget _getImages({required bool isSmallOrNormalScreen}) {
+    return Align(
+      alignment:
+          isSmallOrNormalScreen ? Alignment.center : Alignment.centerRight,
+      child: Image.asset('assets/images/coworking.png'),
+    );
+  }
+
+  Widget _getForms({required bool isSmallOrNormalScreen}) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Row(
+          children: [
+            Flexible(
+              flex: 1,
+              child: _getTextFieldItem(
+                controller: _nameController,
+                maxLines: 1,
+                labelText: 'Name',
+                hintText: 'Type your name',
+                isEmpty: _isNameEmpty,
+              ),
+            ),
+            SizedBox(
+              width: 20,
+            ),
+            Flexible(
+              flex: 1,
+              child: _getTextFieldItem(
+                controller: _emailController,
+                maxLines: 1,
+                labelText: 'Email',
+                hintText: 'Type your email',
+                isEmpty: _isEmailEmpty,
+              ),
+            ),
+          ],
+        ),
+        Flexible(
+          flex: 1,
+          child: _getTextFieldItem(
+            controller: _subjectController,
+            maxLines: 1,
+            labelText: 'Subject',
+            hintText: 'Type subject',
+            isEmpty: _isSubjectEmpty,
+          ),
+        ),
+        Flexible(
+          flex: 3,
+          child: _getTextFieldItem(
+            controller: _messageController,
+            maxLines: 4,
+            labelText: 'Message',
+            hintText: 'Type message',
+            isEmpty: _isMessageEmpty,
+            alignWithHint: true,
+          ),
+        ),
+        Flexible(
+          flex: 1,
+          child: ElevatedButton(
+            onPressed: () async {
+              setState(() {
+                _isNameEmpty = _isEmptyValidate(_nameController);
+                _isEmailEmpty = _isEmptyValidate(_emailController);
+                _isSubjectEmpty = _isEmptyValidate(_subjectController);
+                _isMessageEmpty = _isEmptyValidate(_messageController);
+              });
+
+              if (!_isNameEmpty &&
+                  !_isEmailEmpty &&
+                  !_isSubjectEmpty &&
+                  !_isMessageEmpty) {
+                String name = _nameController.text;
+                String email = _emailController.text;
+                String subject = _subjectController.text;
+                String message = _messageController.text;
+
+                final emailUri = Uri(
+                  scheme: 'mailto',
+                  path: 'erikriosetiawan15@gmail.com',
+                  queryParameters: {
+                    'name': name,
+                    'email': email,
+                    'subject': subject,
+                    'message': message,
+                  },
+                );
+
+                String url = emailUri.toString();
+                await canLaunch(url)
+                    ? await launch(url)
+                    : throw 'Could not launch $url';
+              }
+            },
+            child: Text('Send'),
+            style: ButtonStyle(
+              padding: MaterialStateProperty.all(
+                isSmallOrNormalScreen
+                    ? EdgeInsets.symmetric(
+                        vertical: 12.0,
+                        horizontal: 28.0,
+                      )
+                    : EdgeInsets.symmetric(
+                        vertical: 14.0,
+                        horizontal: 34.0,
+                      ),
+              ),
+              textStyle: MaterialStateProperty.all(
+                TextStyle(
+                  fontSize: isSmallOrNormalScreen ? 16.0 : 18.0,
+                ),
+              ),
+              backgroundColor: MaterialStateProperty.all(
+                Colors.blue.shade700,
+              ),
+              shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                    18.0,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
