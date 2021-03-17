@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Resume extends StatelessWidget {
   final double height;
@@ -55,7 +56,13 @@ class Resume extends StatelessWidget {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      final String url =
+                          'https://www.linkedin.com/in/erikriosetiawan/';
+                      await canLaunch(url)
+                          ? await launch(url)
+                          : throw 'Could not launch $url';
+                    },
                     child: Text('Download CV'),
                     style: ButtonStyle(
                       padding: MaterialStateProperty.all(
