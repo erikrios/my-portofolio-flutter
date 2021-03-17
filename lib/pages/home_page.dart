@@ -75,7 +75,8 @@ class HomePage extends StatelessWidget {
                     height: size.height,
                   ),
                   Footer(
-                    height: size.height * 1 / 4,
+                    screenSize: screenSize,
+                    height: size.height,
                   ),
                 ],
               ),
