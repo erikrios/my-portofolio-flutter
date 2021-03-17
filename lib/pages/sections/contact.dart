@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Contact extends StatefulWidget {
   final double height;
@@ -28,7 +29,6 @@ class _ContactState extends State<Contact> {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       height: height,
       padding: EdgeInsets.symmetric(
@@ -132,7 +132,7 @@ class _ContactState extends State<Contact> {
                             Flexible(
                               flex: 1,
                               child: ElevatedButton(
-                                onPressed: () {
+                                onPressed: () async {
                                   setState(() {
                                     _isNameEmpty =
                                         _isEmptyValidate(_nameController);
@@ -143,6 +143,32 @@ class _ContactState extends State<Contact> {
                                     _isMessageEmpty =
                                         _isEmptyValidate(_messageController);
                                   });
+
+                                  if (!_isNameEmpty &&
+                                      !_isEmailEmpty &&
+                                      !_isSubjectEmpty &&
+                                      !_isMessageEmpty) {
+                                    String name = _nameController.text;
+                                    String email = _emailController.text;
+                                    String subject = _subjectController.text;
+                                    String message = _messageController.text;
+
+                                    final emailUri = Uri(
+                                      scheme: 'mailto',
+                                      path: 'erikriosetiawan15@gmail.com',
+                                      queryParameters: {
+                                        'name': name,
+                                        'email': email,
+                                        'subject': subject,
+                                        'message': message,
+                                      },
+                                    );
+
+                                    String url = emailUri.toString();
+                                    await canLaunch(url)
+                                        ? await launch(url)
+                                        : throw 'Could not launch $url';
+                                  }
                                 },
                                 child: Text('Send'),
                                 style: ButtonStyle(
