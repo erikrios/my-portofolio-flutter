@@ -72,7 +72,7 @@ class HomePage extends StatelessWidget {
                   ),
                   Contact(
                     screenSize: screenSize,
-                    height: size.height * 5 / 6,
+                    height: size.height,
                   ),
                   Footer(
                     height: size.height * 1 / 4,
