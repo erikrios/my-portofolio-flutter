@@ -20,12 +20,16 @@ class Portofolio {
       required this.contacts});
 
   factory Portofolio.fromJson(Map<String, dynamic> json) {
+    var roles = json['specializing'] as List;
+    var projects = json['projects'] as List;
+    var contacts = json['contacts'] as List;
     return Portofolio(
         name: json['name'],
         introduction: json['introduction'],
         resume: json['resume'],
-        roles: json['specializing'],
-        projects: json['projects'],
-        contacts: json['contacts']);
+        roles: roles.map((role) => Role.fromJson(role)).toList(),
+        projects: projects.map((project) => Project.fromJson(project)).toList(),
+        contacts:
+            contacts.map((contact) => Contact.fromJson(contact)).toList());
   }
 }
