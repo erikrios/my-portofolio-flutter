@@ -9,4 +9,12 @@ class Project {
       required this.description,
       required this.url,
       required this.imagePath});
+
+  factory Project.fromJson(Map<String, dynamic> json) {
+    return Project(
+        name: json['name'],
+        description: json['description'],
+        url: json['url'],
+        imagePath: json['imagePath']);
+  }
 }
