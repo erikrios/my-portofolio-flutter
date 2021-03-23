@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_portofolio_flutter/bloc/portofolio/portofolio_bloc.dart';
+import 'package:my_portofolio_flutter/bloc/portofolio/portofolio_state.dart';
+import 'package:my_portofolio_flutter/models/role.dart';
 import 'package:my_portofolio_flutter/responsive/screen_size.dart';
 
 class Specialization extends StatelessWidget {
@@ -11,6 +15,7 @@ class Specialization extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isSmallOrNormalScreen =
         screenSize == ScreenSize.SMALL || screenSize == ScreenSize.NORMAL;
+    final PortofolioBloc bloc = BlocProvider.of<PortofolioBloc>(context);
 
     return Container(
       height: isSmallOrNormalScreen ? height * 1 : height * 3 / 4,
@@ -44,38 +49,49 @@ class Specialization extends StatelessWidget {
                 padding: EdgeInsets.all(
                   isSmallOrNormalScreen ? 16.0 : 40.0,
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Flexible(
-                      flex: 1,
-                      child: Text(
-                        'Specializing In'.toUpperCase(),
-                        style: TextStyle(
-                          fontSize: isSmallOrNormalScreen ? 28.0 : 40.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue.shade700,
-                        ),
-                      ),
-                    ),
-                    Flexible(
-                      flex: isSmallOrNormalScreen ? 5 : 2,
-                      child: isSmallOrNormalScreen
-                          ? Column(
-                              children: _getSpecializationItems(
-                                isSmallOrNormalScreen: isSmallOrNormalScreen,
-                              ),
-                            )
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: _getSpecializationItems(
-                                isSmallOrNormalScreen: isSmallOrNormalScreen,
+                child: BlocBuilder<PortofolioBloc, PortofolioState>(
+                    bloc: bloc,
+                    builder: (context, state) => Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              flex: 1,
+                              child: Text(
+                                'Specializing In'.toUpperCase(),
+                                style: TextStyle(
+                                  fontSize: isSmallOrNormalScreen ? 28.0 : 40.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue.shade700,
+                                ),
                               ),
                             ),
-                    ),
-                  ],
-                ),
+                            Flexible(
+                              flex: isSmallOrNormalScreen ? 5 : 2,
+                              child: isSmallOrNormalScreen
+                                  ? Column(
+                                      children: _getSpecializationItems(
+                                        roles: state is PortofolioSuccessState
+                                            ? state.portofolio.roles
+                                            : [],
+                                        isSmallOrNormalScreen:
+                                            isSmallOrNormalScreen,
+                                      ),
+                                    )
+                                  : Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: _getSpecializationItems(
+                                        roles: state is PortofolioSuccessState
+                                            ? state.portofolio.roles
+                                            : [],
+                                        isSmallOrNormalScreen:
+                                            isSmallOrNormalScreen,
+                                      ),
+                                    ),
+                            ),
+                          ],
+                        )),
               ),
             ),
           )
@@ -84,37 +100,29 @@ class Specialization extends StatelessWidget {
     );
   }
 
-  List<Widget> _getSpecializationItems({required bool isSmallOrNormalScreen}) {
-    return [
-      Flexible(
+  List<Widget> _getSpecializationItems(
+      {required bool isSmallOrNormalScreen, required List<Role> roles}) {
+    final List<IconData> icons = [Icons.android, Icons.computer, Icons.web];
+    int position = 0;
+
+    return roles.map((role) {
+      Widget widgetItem = Flexible(
         flex: 1,
         child: _getSpecializationItem(
-          title: 'Android Developer',
-          iconData: Icons.android,
+          title: role.name,
+          description: role.description,
+          iconData: icons[position],
           isSmallOrNormalScreen: isSmallOrNormalScreen,
         ),
-      ),
-      Flexible(
-        flex: 1,
-        child: _getSpecializationItem(
-          title: 'Back-End Engineer',
-          iconData: Icons.computer,
-          isSmallOrNormalScreen: isSmallOrNormalScreen,
-        ),
-      ),
-      Flexible(
-        flex: 1,
-        child: _getSpecializationItem(
-          title: 'Cross-Platform Developer',
-          iconData: Icons.web,
-          isSmallOrNormalScreen: isSmallOrNormalScreen,
-        ),
-      ),
-    ];
+      );
+      position++;
+      return widgetItem;
+    }).toList();
   }
 
   Widget _getSpecializationItem(
       {required String title,
+      required String description,
       required IconData iconData,
       required bool isSmallOrNormalScreen}) {
     return Padding(
@@ -157,7 +165,7 @@ class Specialization extends StatelessWidget {
             ),
           ),
           Text(
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            description,
             textAlign: TextAlign.center,
             maxLines: isSmallOrNormalScreen ? 5 : 4,
             overflow: TextOverflow.ellipsis,
