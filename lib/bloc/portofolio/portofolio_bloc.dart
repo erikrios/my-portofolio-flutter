@@ -7,7 +7,9 @@ import 'package:my_portofolio_flutter/bloc/portofolio/portofolio_state.dart';
 import 'package:my_portofolio_flutter/models/portofolio.dart';
 
 class PortofolioBloc extends Bloc<PortofolioEvent, PortofolioState> {
-  PortofolioBloc() : super(PortofolioLoadingState());
+  PortofolioBloc() : super(PortofolioLoadingState()) {
+    this.add(PortofolioEvent.GET_DATA);
+  }
 
   @override
   Stream<PortofolioState> mapEventToState(PortofolioEvent event) async* {
