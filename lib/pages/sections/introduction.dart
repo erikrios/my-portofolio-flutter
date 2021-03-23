@@ -17,7 +17,7 @@ class Introduction extends StatelessWidget {
     final isSmallOrNormalScreen =
         screenSize == ScreenSize.SMALL || screenSize == ScreenSize.NORMAL;
 
-    PortofolioBloc bloc = BlocProvider.of<PortofolioBloc>(context);
+    final PortofolioBloc bloc = BlocProvider.of<PortofolioBloc>(context);
 
     return Container(
       height: this.height * 3 / 4,
