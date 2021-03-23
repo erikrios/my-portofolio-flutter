@@ -1,31 +1,17 @@
 import 'package:my_portofolio_flutter/models/portofolio.dart';
 
-abstract class PortofolioState {
-  bool isLoading;
-  Portofolio? portofolio;
-  Exception? exception;
+abstract class PortofolioState {}
 
-  PortofolioState(
-      {required this.isLoading,
-      required this.portofolio,
-      required this.exception});
-}
-
-class PortofolioLoadingState extends PortofolioState {
-  PortofolioLoadingState()
-      : super(isLoading: true, portofolio: null, exception: null);
-}
+class PortofolioLoadingState extends PortofolioState {}
 
 class PortofolioErrorState extends PortofolioState {
   final Exception exception;
 
-  PortofolioErrorState({required this.exception})
-      : super(isLoading: false, portofolio: null, exception: null);
+  PortofolioErrorState({required this.exception});
 }
 
 class PortofolioSuccessState extends PortofolioState {
   final Portofolio portofolio;
 
-  PortofolioSuccessState({required this.portofolio})
-      : super(isLoading: false, portofolio: portofolio, exception: null);
+  PortofolioSuccessState({required this.portofolio});
 }
