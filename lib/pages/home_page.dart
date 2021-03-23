@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_portofolio_flutter/bloc/portofolio/portofolio_bloc.dart';
 import 'package:my_portofolio_flutter/pages/sections/contact.dart';
 import 'package:my_portofolio_flutter/pages/sections/introduction.dart';
 import 'package:my_portofolio_flutter/pages/sections/recent_work.dart';
@@ -52,33 +54,36 @@ class HomePage extends StatelessWidget {
           ),
           body: Scrollbar(
             child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Introduction(
-                    screenSize: screenSize,
-                    height: size.height,
-                  ),
-                  Resume(
-                    screenSize: screenSize,
-                    height: size.height,
-                  ),
-                  Specialization(
-                    screenSize: screenSize,
-                    height: size.height,
-                  ),
-                  RecentWork(
-                    screenSize: screenSize,
-                    height: size.height,
-                  ),
-                  Contact(
-                    screenSize: screenSize,
-                    height: size.height,
-                  ),
-                  Footer(
-                    screenSize: screenSize,
-                    height: size.height,
-                  ),
-                ],
+              child: BlocProvider(
+                create: (BuildContext context) => PortofolioBloc(),
+                child: Column(
+                  children: [
+                    Introduction(
+                      screenSize: screenSize,
+                      height: size.height,
+                    ),
+                    Resume(
+                      screenSize: screenSize,
+                      height: size.height,
+                    ),
+                    Specialization(
+                      screenSize: screenSize,
+                      height: size.height,
+                    ),
+                    RecentWork(
+                      screenSize: screenSize,
+                      height: size.height,
+                    ),
+                    Contact(
+                      screenSize: screenSize,
+                      height: size.height,
+                    ),
+                    Footer(
+                      screenSize: screenSize,
+                      height: size.height,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
