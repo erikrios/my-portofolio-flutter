@@ -1,6 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_portofolio_flutter/bloc/portofolio/portofolio_bloc.dart';
+import 'package:my_portofolio_flutter/bloc/portofolio/portofolio_state.dart';
 import 'package:my_portofolio_flutter/responsive/screen_size.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -44,6 +47,7 @@ class _ContactState extends State<Contact> {
 
   @override
   Widget build(BuildContext context) {
+    final PortofolioBloc bloc = BlocProvider.of<PortofolioBloc>(context);
     bool isSmallOrNormalScreen =
         screenSize == ScreenSize.SMALL || screenSize == ScreenSize.NORMAL;
     print(isSmallOrNormalScreen);
@@ -101,6 +105,7 @@ class _ContactState extends State<Contact> {
                             Flexible(
                               flex: 2,
                               child: _getForms(
+                                  bloc: bloc,
                                   isSmallOrNormalScreen: isSmallOrNormalScreen),
                             ),
                           ],
@@ -117,6 +122,7 @@ class _ContactState extends State<Contact> {
                             Flexible(
                               flex: 1,
                               child: _getForms(
+                                bloc: bloc,
                                 isSmallOrNormalScreen: isSmallOrNormalScreen,
                               ),
                             ),
@@ -164,7 +170,9 @@ class _ContactState extends State<Contact> {
     );
   }
 
-  Widget _getForms({required bool isSmallOrNormalScreen}) {
+  Widget _getForms(
+      {required PortofolioBloc bloc, required bool isSmallOrNormalScreen}) {
+    String emailAddress = "";
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -218,66 +226,79 @@ class _ContactState extends State<Contact> {
         ),
         Flexible(
           flex: 1,
-          child: ElevatedButton(
-            onPressed: () async {
-              setState(() {
-                _isNameEmpty = _isEmptyValidate(_nameController);
-                _isEmailEmpty = _isEmptyValidate(_emailController);
-                _isSubjectEmpty = _isEmptyValidate(_subjectController);
-                _isMessageEmpty = _isEmptyValidate(_messageController);
-              });
-
-              if (!_isNameEmpty &&
-                  !_isEmailEmpty &&
-                  !_isSubjectEmpty &&
-                  !_isMessageEmpty) {
-                String name = _nameController.text;
-                String email = _emailController.text;
-                String subject = _subjectController.text;
-                String message = _messageController.text;
-
-                final emailUri = Uri(
-                  scheme: 'mailto',
-                  path: 'erikriosetiawan15@gmail.com',
-                  queryParameters: {
-                    'name': name,
-                    'email': email,
-                    'subject': subject,
-                    'message': message,
-                  },
-                );
-
-                String url = emailUri.toString();
-                await canLaunch(url)
-                    ? await launch(url)
-                    : throw 'Could not launch $url';
+          child: BlocListener<PortofolioBloc, PortofolioState>(
+            bloc: bloc,
+            listener: (context, state) {
+              if (state is PortofolioSuccessState) {
+                emailAddress = state.portofolio.contacts
+                    .singleWhere((contact) =>
+                        contact.platform.toLowerCase() == 'Gmail'.toLowerCase())
+                    .url;
+              } else {
+                emailAddress = "erikriosetiawan15@gmail.com";
               }
             },
-            child: Text('Send'),
-            style: ButtonStyle(
-              padding: MaterialStateProperty.all(
-                isSmallOrNormalScreen
-                    ? EdgeInsets.symmetric(
-                        vertical: 12.0,
-                        horizontal: 28.0,
-                      )
-                    : EdgeInsets.symmetric(
-                        vertical: 14.0,
-                        horizontal: 34.0,
-                      ),
-              ),
-              textStyle: MaterialStateProperty.all(
-                TextStyle(
-                  fontSize: isSmallOrNormalScreen ? 16.0 : 18.0,
+            child: ElevatedButton(
+              onPressed: () async {
+                setState(() {
+                  _isNameEmpty = _isEmptyValidate(_nameController);
+                  _isEmailEmpty = _isEmptyValidate(_emailController);
+                  _isSubjectEmpty = _isEmptyValidate(_subjectController);
+                  _isMessageEmpty = _isEmptyValidate(_messageController);
+                });
+
+                if (!_isNameEmpty &&
+                    !_isEmailEmpty &&
+                    !_isSubjectEmpty &&
+                    !_isMessageEmpty) {
+                  String name = _nameController.text;
+                  String email = _emailController.text;
+                  String subject = _subjectController.text;
+                  String message = _messageController.text;
+
+                  final emailUri = Uri(
+                    scheme: 'mailto',
+                    path: emailAddress,
+                    queryParameters: {
+                      'name': name,
+                      'email': email,
+                      'subject': subject,
+                      'message': message,
+                    },
+                  );
+
+                  String url = emailUri.toString();
+                  await canLaunch(url)
+                      ? await launch(url)
+                      : throw 'Could not launch $url';
+                }
+              },
+              child: Text('Send'),
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all(
+                  isSmallOrNormalScreen
+                      ? EdgeInsets.symmetric(
+                          vertical: 12.0,
+                          horizontal: 28.0,
+                        )
+                      : EdgeInsets.symmetric(
+                          vertical: 14.0,
+                          horizontal: 34.0,
+                        ),
                 ),
-              ),
-              backgroundColor: MaterialStateProperty.all(
-                Colors.blue.shade700,
-              ),
-              shape: MaterialStateProperty.all(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(
-                    18.0,
+                textStyle: MaterialStateProperty.all(
+                  TextStyle(
+                    fontSize: isSmallOrNormalScreen ? 16.0 : 18.0,
+                  ),
+                ),
+                backgroundColor: MaterialStateProperty.all(
+                  Colors.blue.shade700,
+                ),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                      18.0,
+                    ),
                   ),
                 ),
               ),
