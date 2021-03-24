@@ -90,7 +90,7 @@ class RecentWork extends StatelessWidget {
                                 name: '',
                                 description: '',
                                 url: '',
-                                imagePath: '',
+                                imagePath: 'assets/images/reogapps.png',
                               ),
                       ),
                       options: CarouselOptions(
