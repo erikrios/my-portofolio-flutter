@@ -38,7 +38,7 @@ class Footer extends StatelessWidget {
                             String url = contact.url;
                             if (url.contains('@')) {
                               final mail = url;
-                              url = mail + url;
+                              url = 'mailto:$mail';
                             }
                             await canLaunch(url)
                                 ? await launch(url)
