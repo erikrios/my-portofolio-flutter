@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:my_portofolio_flutter/models/project.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_portofolio_flutter/bloc/portofolio/portofolio_bloc.dart';
+import 'package:my_portofolio_flutter/bloc/portofolio/portofolio_state.dart';
 import 'package:my_portofolio_flutter/responsive/screen_size.dart';
 import 'package:my_portofolio_flutter/widgets/project_item.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -13,9 +15,9 @@ class RecentWork extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final projects = getProjects();
     final bool isSmallOrNormalScreen =
         screenSize == ScreenSize.SMALL || screenSize == ScreenSize.NORMAL;
+    final PortofolioBloc bloc = BlocProvider.of<PortofolioBloc>(context);
 
     return Container(
       height: isSmallOrNormalScreen ? height * 1.2 : height * 5 / 6,
@@ -72,19 +74,26 @@ class RecentWork extends StatelessWidget {
                     vertical: isSmallOrNormalScreen ? 16.0 : 25.0,
                     horizontal: isSmallOrNormalScreen ? 20.0 : 100.0,
                   ),
-                  child: CarouselSlider.builder(
-                    itemCount: projects.length,
-                    itemBuilder: (BuildContext context, int index, _) =>
-                        ProjectItem(
-                      isSmallOrNormalScreen: isSmallOrNormalScreen,
-                      project: projects[index],
-                    ),
-                    options: CarouselOptions(
-                      autoPlay: true,
-                      height: double.maxFinite,
-                      viewportFraction: 1,
-                      autoPlayInterval: Duration(
-                        seconds: 5,
+                  child: BlocBuilder<PortofolioBloc, PortofolioState>(
+                    bloc: bloc,
+                    builder: (context, state) => CarouselSlider.builder(
+                      itemCount: state is PortofolioSuccessState
+                          ? state.portofolio.projects.length
+                          : 0,
+                      itemBuilder: (BuildContext context, int index, _) =>
+                          ProjectItem(
+                        isSmallOrNormalScreen: isSmallOrNormalScreen,
+                        project: (state as PortofolioSuccessState)
+                            .portofolio
+                            .projects[index],
+                      ),
+                      options: CarouselOptions(
+                        autoPlay: true,
+                        height: double.maxFinite,
+                        viewportFraction: 1,
+                        autoPlayInterval: Duration(
+                          seconds: 5,
+                        ),
                       ),
                     ),
                   ),
@@ -143,26 +152,5 @@ class RecentWork extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  List<Project> getProjects() {
-    return [
-      Project(
-        name: 'Reog Apps',
-        description:
-            'Reog Apps merupakan sebuah aplikasi mobile berbasis Android yang digunakan untuk memudahkan segala infomasi yang ada di Ponorogo. Kini Anda dapat dengan mudah mendapatkan informasi aktual dan terbaru seputar wilayah Ponorogo hanya dengan sekali klik. Banyak sekali fitur-fitur yang ditawarkan oleh aplikasi Reog Apps ini, diantaranya informasi seputar Ponorogo, tempat wisata di Ponorogo, makanan khas, sejarah, dan wallpaper Reog Ponorogo.',
-        url:
-            'https://play.google.com/store/apps/details?id=io.erikrios.github.reogapps',
-        imagePath: 'assets/images/reogapps.png',
-      ),
-      Project(
-        name: 'Reog Wallpaper',
-        description:
-            'Reog Wallpaper merupakan aplikasi keren yang berisi kumpulan wallpaper Reog Ponorogo. Dengan menggunakan aplikasi Reog Apps ini, kamu bisa menemukan gambar menarik mengenai Reog Ponorogo, antara lain wallpaper Reog, wallpaper Klono Sewandono, wallpaper Bujang Ganong, wallpaper Warok, dan wallpaper Jathil. Selain itu, wallpaper tersebut bisa diatur sebagai home screen (layar depan), lock screen (layar kunci), bahkan keduanya di perangkat / smartphone kamu.',
-        url:
-            'https://play.google.com/store/apps/details?id=io.erikrios.github.reogwallpaper',
-        imagePath: 'assets/images/reogwallpaper.png',
-      )
-    ];
   }
 }
