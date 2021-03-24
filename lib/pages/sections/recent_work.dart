@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_portofolio_flutter/bloc/portofolio/portofolio_bloc.dart';
 import 'package:my_portofolio_flutter/bloc/portofolio/portofolio_state.dart';
+import 'package:my_portofolio_flutter/models/project.dart';
 import 'package:my_portofolio_flutter/responsive/screen_size.dart';
 import 'package:my_portofolio_flutter/widgets/project_item.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -83,9 +84,14 @@ class RecentWork extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index, _) =>
                           ProjectItem(
                         isSmallOrNormalScreen: isSmallOrNormalScreen,
-                        project: (state as PortofolioSuccessState)
-                            .portofolio
-                            .projects[index],
+                        project: (state is PortofolioSuccessState)
+                            ? state.portofolio.projects[index]
+                            : Project(
+                                name: '',
+                                description: '',
+                                url: '',
+                                imagePath: '',
+                              ),
                       ),
                       options: CarouselOptions(
                         autoPlay: true,
