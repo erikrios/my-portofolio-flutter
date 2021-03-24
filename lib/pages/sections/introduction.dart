@@ -85,9 +85,7 @@ class Introduction extends StatelessWidget {
                   ? "Loading...".toUpperCase()
                   : state is PortofolioErrorState
                       ? "No Data".toUpperCase()
-                      : (state as PortofolioSuccessState)
-                          .portofolio
-                          .name
+                      : "I'm ${(state as PortofolioSuccessState).portofolio.name}"
                           .toUpperCase(),
               textAlign:
                   isSmallOrNormalScreen ? TextAlign.center : TextAlign.left,
