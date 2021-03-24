@@ -35,7 +35,11 @@ class Footer extends StatelessWidget {
                           iconSize: isSmallOrNormalScreen ? 24.0 : 36.0,
                           padding: isSmallOrNormalScreen ? 4.0 : 8.0,
                           onPressed: () async {
-                            final String url = contact.url;
+                            String url = contact.url;
+                            if (url.contains('@')) {
+                              final mail = url;
+                              url = mail + url;
+                            }
                             await canLaunch(url)
                                 ? await launch(url)
                                 : throw 'Could not launch $url';
